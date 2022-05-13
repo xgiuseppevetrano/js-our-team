@@ -51,3 +51,25 @@ for (let i = 0; i < teamMembers.length; i++) {
     `;
     teamCardsContainer.innerHTML += card;
 }
+
+// BONUS
+// 1. Prendo le variabili che mi serveno
+const newFullName = document.getElementById("name");
+const newImage = document.getElementById("image");
+const newJobPosition = document.getElementById("role");
+const addBtn = document.getElementById("addMemberButton");
+
+// 2. Creo un nuovo oggetto con all'interno i valori presi dal form
+const newTeamMember = {
+    fullName: newFullName.value,
+    image: newImage.value,
+    jobPosition: newJobPosition.value,
+}
+
+// 3. Genero l'evento al click del pulsante "Add"
+addBtn.addEventListener("click", 
+    function(){
+        // 4. Pusho dentro l'array di oggetti (teamMembers) il nuovo oggetto (newTeamMember)
+        teamMembers.push(newTeamMember);
+    }
+);
