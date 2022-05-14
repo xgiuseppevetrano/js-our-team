@@ -32,44 +32,56 @@ const teamMembers = [
     },
 ];
 
-// 2. Prendo dall'HTML il container in cui inserirò le card
+// 2. Prendo dall'HTML gli elementi che mi serveno
 const teamCardsContainer = document.querySelector(".team-container");
-
-// 3. Creo un ciclo per scorrere l'array di oggetti
-for (let i = 0; i < teamMembers.length; i++) {
-    // 3a. Stampo nell'HTML le card dei membri del team
-    const card = `
-        <div class="team-card">
-            <div class="card-image">
-                <img src="${teamMembers[i].image}" alt="${teamMembers[i].fullName}">
-            </div>
-            <div class="card-text">
-                <h3>${teamMembers[i].fullName}</h3>
-                <p>${teamMembers[i].jobPosition}</p>
-            </div>
-        </div>
-    `;
-    teamCardsContainer.innerHTML += card;
-}
-
-// BONUS
-// 1. Prendo le variabili che mi serveno
 const newFullName = document.getElementById("name");
 const newImage = document.getElementById("image");
 const newJobPosition = document.getElementById("role");
 const addBtn = document.getElementById("addMemberButton");
 
-// 2. Creo un nuovo oggetto con all'interno i valori presi dal form
-const newTeamMember = {
-    fullName: newFullName.value,
-    image: newImage.value,
-    jobPosition: newJobPosition.value,
+// 3. Creo un ciclo per creare le card
+for (let i = 0; i < teamMembers.length; i++) {
+    const card = `
+    <div class="team-card">
+        <div class="card-image">
+            <img src="${teamMembers[i].image}" alt="${teamMembers[i].fullName}">
+        </div>
+        <div class="card-text">
+            <h3>${teamMembers[i].fullName}</h3>
+            <p>${teamMembers[i].jobPosition}</p>
+        </div>
+    </div>
+    `;
+    
+    // 3a. Stampo in HTML le card create
+    teamCardsContainer.innerHTML += card;
 }
 
-// 3. Genero l'evento al click del pulsante "Add"
+// 4. Genero l'evento al click del pulsante "Add"
 addBtn.addEventListener("click", 
     function(){
-        // 4. Pusho dentro l'array di oggetti (teamMembers) il nuovo oggetto (newTeamMember)
+        // 4a. Creo un oggetto
+        const newTeamMember = {
+            fullName: newFullName.value,
+            image: newImage.value,
+            jobPosition: newJobPosition.value,
+        }
+
+        // 4b. Creo una nuova card
+        const newCard = `
+        <div class="team-card">
+            <div class="card-image">
+                <img src="${newTeamMember.image}" alt="${newTeamMember.fullName}">
+            </div>
+            <div class="card-text">
+                <h3>${newTeamMember.fullName}</h3>
+                <p>${newTeamMember.jobPosition}</p>
+            </div>
+        </div>
+        `;
+
+        // 4c. Stampo in HTML la nuova card e la pusho nell'array di oggetti (teamMembers)
+        teamCardsContainer.innerHTML += newCard;
         teamMembers.push(newTeamMember);
     }
 );
