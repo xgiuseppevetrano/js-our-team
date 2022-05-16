@@ -1,3 +1,25 @@
+/*---------------
+    FUNCTIONS
+---------------*/
+function printCard(container, object) {
+    const card = `
+    <div class="team-card">
+        <div class="card-image">
+            <img src="${object.image}" alt="${object.fullName}">
+        </div>
+        <div class="card-text">
+            <h3>${object.fullName}</h3>
+            <p>${object.jobPosition}</p>
+        </div>
+    </div>
+    `;
+
+    container.innerHTML += card;
+}
+
+/*------------
+    MAIN
+------------*/
 // 1. Creo un array di oggetti
 const teamMembers = [
     {
@@ -41,47 +63,38 @@ const addBtn = document.getElementById("addMemberButton");
 
 // 3. Creo un ciclo per creare le card
 for (let i = 0; i < teamMembers.length; i++) {
-    const card = `
-    <div class="team-card">
-        <div class="card-image">
-            <img src="${teamMembers[i].image}" alt="${teamMembers[i].fullName}">
-        </div>
-        <div class="card-text">
-            <h3>${teamMembers[i].fullName}</h3>
-            <p>${teamMembers[i].jobPosition}</p>
-        </div>
-    </div>
-    `;
-    
-    // 3a. Stampo in HTML le card create
-    teamCardsContainer.innerHTML += card;
+    printCard(teamCardsContainer, teamMembers[i]);
 }
 
 // 4. Genero l'evento al click del pulsante "Add"
 addBtn.addEventListener("click", 
     function(){
-        // 4a. Creo un oggetto
+        // 4a. Controllo se ho le giuste informazioni all'interno dei campi input
+        if (newFullName.value === "" || newJobPosition.value === "") {
+            alert ("Name and role are required information");
+            return;
+        }
+        
+        if (newImage.value === "") {
+            newImage.value = "https://via.placeholder.com/400x429";
+        }
+        
+        // 4b. Creo un oggetto
         const newTeamMember = {
             fullName: newFullName.value,
             image: newImage.value,
             jobPosition: newJobPosition.value,
         }
-
-        // 4b. Creo una nuova card
-        const newCard = `
-        <div class="team-card">
-            <div class="card-image">
-                <img src="${newTeamMember.image}" alt="${newTeamMember.fullName}">
-            </div>
-            <div class="card-text">
-                <h3>${newTeamMember.fullName}</h3>
-                <p>${newTeamMember.jobPosition}</p>
-            </div>
-        </div>
-        `;
-
-        // 4c. Stampo in HTML la nuova card e la pusho nell'array di oggetti (teamMembers)
-        teamCardsContainer.innerHTML += newCard;
+        
+        // 4c. Pusho l'oggetto nell'array di oggetti (teamMembers)
         teamMembers.push(newTeamMember);
+
+        // 4d. Creo una nuova card
+        printCard(teamCardsContainer, newTeamMember);
+
+        // 4e. Pulisco i campi input
+        newFullName.value = "";
+        newImage.value = "";
+        newJobPosition.value = "";
     }
 );
